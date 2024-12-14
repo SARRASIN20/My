@@ -1,0 +1,65 @@
+.container {
+  width: 300px;
+  padding: 15px;
+}
+
+#commandInput {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#executeBtn {
+  width: 100%;
+  padding: 8px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#executeBtn:hover {
+  background-color: #45a049;
+}
+
+#status {
+  margin-top: 10px;
+  padding: 8px;
+  display: none;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.settings-link {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.settings-link a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.settings-link a:hover {
+  text-decoration: underline;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+} 

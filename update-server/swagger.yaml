@@ -1,0 +1,230 @@
+openapi: 3.0.0
+info:
+  title: Sahara Assistant Update Server API
+  version: 1.0.0
+  description: API pour la gestion des mises à jour et le monitoring de Sahara Assistant
+
+servers:
+  - url: http://localhost:3000
+    description: Serveur de développement
+  - url: https://api.sahara-assistant.com
+    description: Serveur de production
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+    Update:
+      type: object
+      properties:
+        id:
+          type: string
+        version:
+          type: string
+        platform:
+          type: string
+          enum: [win, mac, linux]
+        publishedAt:
+          type: string
+          format: date-time
+        minimumVersion:
+          type: string
+        notes:
+          type: string
+        downloadUrl:
+          type: string
+        status:
+          type: string
+          enum: [draft, active, deprecated]
+    Metric:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        type:
+          type: string
+        value:
+          type: number
+        metadata:
+          type: object
+
+paths:
+  /updates/check:
+    get:
+      summary: Vérifie les mises à jour disponibles
+      parameters:
+        - in: query
+          name: currentVersion
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: platform
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Informations sur la mise à jour disponible
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update'
+        '404':
+          description: Aucune mise à jour disponible
+
+  /updates/download/{id}:
+    get:
+      summary: Télécharge une mise à jour
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Fichier de mise à jour
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Mise à jour non trouvée
+
+  /updates:
+    post:
+      summary: Crée une nouvelle mise à jour
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+                platform:
+                  type: string
+                minimumVersion:
+                  type: string
+                notes:
+                  type: string
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Mise à jour créée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Update'
+
+  /metrics:
+    post:
+      summary: Envoie des métriques
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Metric'
+      responses:
+        '201':
+          description: Métriques enregistrées
+
+  /metrics/query:
+    get:
+      summary: Récupère des métriques
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+        - in: query
+          name: startTime
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: endTime
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Liste des métriques
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Metric'
+
+  /errors:
+    post:
+      summary: Rapporte une erreur
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+      responses:
+        '201':
+          description: Erreur enregistrée
+
+  /errors/query:
+    get:
+      summary: Récupère les erreurs
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+        - in: query
+          name: priority
+          schema:
+            type: string
+        - in: query
+          name: startTime
+          schema:
+            type: string
+            format: date-time
+        - in: query
+          name: endTime
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Liste des erreurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'

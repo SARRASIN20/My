@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sahara Assistant</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/themes.css">
+</head>
+<body class="theme-sahara">
+  <div class="titlebar">
+    <div class="titlebar-drag">Sahara Assistant</div>
+    <div class="titlebar-controls">
+      <button id="minimizeBtn" class="titlebar-button">─</button>
+      <button id="maximizeBtn" class="titlebar-button">□</button>
+      <button id="closeBtn" class="titlebar-button">×</button>
+    </div>
+  </div>
+
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="../assets/logo.svg" alt="Sahara Assistant Logo" class="logo">
+      </div>
+      
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="assistant">
+          <span class="icon">🎯</span>
+          <span>Assistant</span>
+        </button>
+        <button class="nav-item" data-view="automations">
+          <span class="icon">⚡</span>
+          <span>Automatisations</span>
+        </button>
+        <button class="nav-item" data-view="files">
+          <span class="icon">📁</span>
+          <span>Fichiers</span>
+        </button>
+        <button class="nav-item" data-view="system">
+          <span class="icon">🖥️</span>
+          <span>Système</span>
+        </button>
+        <button class="nav-item" data-view="settings">
+          <span class="icon">⚙️</span>
+          <span>Paramètres</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="system-status">
+          <div class="status-item">
+            <span class="icon">📊</span>
+            <span id="cpuUsage">CPU: ---%</span>
+          </div>
+          <div class="status-item">
+            <span class="icon">💾</span>
+            <span id="memoryUsage">RAM: ---%</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <!-- Vue Assistant -->
+      <section id="assistant-view" class="view active">
+        <div class="command-section">
+          <div class="command-input-wrapper">
+            <input type="text" id="commandInput" placeholder="Comment puis-je vous aider ?" class="command-input">
+            <button id="voiceCommandBtn" class="voice-button">🎤</button>
+          </div>
+          <button id="executeCommandBtn" class="execute-button">Exécuter</button>
+        </div>
+
+        <div class="suggestions-section">
+          <h3>Suggestions</h3>
+          <div class="suggestions-grid">
+            <button class="suggestion-card">
+              <span class="icon">📝</span>
+              <span class="text">Créer un nouveau dossier</span>
+            </button>
+            <button class="suggestion-card">
+              <span class="icon">🔍</span>
+              <span class="text">Rechercher des fichiers</span>
+            </button>
+            <button class="suggestion-card">
+              <span class="icon">🧹</span>
+              <span class="text">Nettoyer le système</span>
+            </button>
+            <button class="suggestion-card">
+              <span class="icon">📊</span>
+              <span class="text">Analyser l'espace disque</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="results-section">
+          <div id="commandResults" class="results-container"></div>
+        </div>
+      </section>
+
+      <!-- Vue Automatisations -->
+      <section id="automations-view" class="view">
+        <div class="section-header">
+          <h2>Automatisations</h2>
+          <button id="newAutomationBtn" class="primary-button">Nouvelle automatisation</button>
+        </div>
+        <div class="automations-grid" id="automationsList"></div>
+      </section>
+
+      <!-- Vue Fichiers -->
+      <section id="files-view" class="view">
+        <div class="section-header">
+          <h2>Gestionnaire de fichiers</h2>
+          <div class="search-bar">
+            <input type="text" placeholder="Rechercher des fichiers..." id="fileSearch">
+          </div>
+        </div>
+        <div class="files-explorer" id="filesExplorer"></div>
+      </section>
+
+      <!-- Vue Système -->
+      <section id="system-view" class="view">
+        <div class="section-header">
+          <h2>État du système</h2>
+        </div>
+        <div class="system-grid">
+          <div class="system-card" id="cpuCard">
+            <h3>Processeur</h3>
+            <div class="chart-container"></div>
+          </div>
+          <div class="system-card" id="memoryCard">
+            <h3>Mémoire</h3>
+            <div class="chart-container"></div>
+          </div>
+          <div class="system-card" id="diskCard">
+            <h3>Disque</h3>
+            <div class="chart-container"></div>
+          </div>
+          <div class="system-card" id="networkCard">
+            <h3>Réseau</h3>
+            <div class="chart-container"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vue Paramètres -->
+      <section id="settings-view" class="view">
+        <div class="section-header">
+          <h2>Paramètres</h2>
+        </div>
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>Apparence</h3>
+            <div class="setting-item">
+              <label for="themeSelect">Thème</label>
+              <select id="themeSelect">
+                <option value="sahara">Sahara</option>
+                <option value="night">Nuit</option>
+                <option value="forest">Forêt</option>
+              </select>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3>Langue</h3>
+            <div class="setting-item">
+              <label for="languageSelect">Langue de l'interface</label>
+              <select id="languageSelect">
+                <option value="fr">Français</option>
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js" type="module"></script>
+</body>
+</html>

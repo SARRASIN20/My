@@ -1,0 +1,123 @@
+/* Thème Sahara */
+.theme-sahara {
+  --primary-color: #E6B17E;
+  --primary-dark: #D19B68;
+  --accent-color: #8B4513;
+  --background-color: #FFF9F3;
+  --text-color: #4A4A4A;
+  --border-color: #F4D03F;
+  --success-color: #27AE60;
+  --error-color: #E74C3C;
+  --warning-color: #F39C12;
+  --info-color: #3498DB;
+}
+
+.theme-sahara .sidebar {
+  background: linear-gradient(to bottom, #FFF9F3, #FFF5E6);
+}
+
+.theme-sahara .nav-item.active {
+  background: linear-gradient(to right, #E6B17E, #D19B68);
+}
+
+/* Thème Nuit */
+.theme-night {
+  --primary-color: #2C3E50;
+  --primary-dark: #1A2533;
+  --accent-color: #3498DB;
+  --background-color: #1C2833;
+  --text-color: #ECF0F1;
+  --border-color: #34495E;
+  --success-color: #27AE60;
+  --error-color: #E74C3C;
+  --warning-color: #F39C12;
+  --info-color: #3498DB;
+}
+
+.theme-night .sidebar {
+  background: linear-gradient(to bottom, #2C3E50, #1A2533);
+}
+
+.theme-night .nav-item {
+  color: #ECF0F1;
+}
+
+.theme-night .nav-item.active {
+  background: linear-gradient(to right, #3498DB, #2980B9);
+}
+
+/* Thème Forêt */
+.theme-forest {
+  --primary-color: #2ECC71;
+  --primary-dark: #27AE60;
+  --accent-color: #F1C40F;
+  --background-color: #F4F9F4;
+  --text-color: #2C3E50;
+  --border-color: #27AE60;
+  --success-color: #27AE60;
+  --error-color: #E74C3C;
+  --warning-color: #F39C12;
+  --info-color: #3498DB;
+}
+
+.theme-forest .sidebar {
+  background: linear-gradient(to bottom, #F4F9F4, #E8F5E9);
+}
+
+.theme-forest .nav-item.active {
+  background: linear-gradient(to right, #2ECC71, #27AE60);
+}
+
+/* Styles communs aux thèmes */
+[class^="theme-"] {
+  transition: all 0.3s ease;
+}
+
+[class^="theme-"] .command-input {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--primary-color);
+}
+
+[class^="theme-"] .execute-button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+
+[class^="theme-"] .execute-button:hover {
+  background-color: var(--primary-dark);
+}
+
+[class^="theme-"] .suggestion-card {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+}
+
+[class^="theme-"] .results-section {
+  background-color: var(--background-color);
+  border-color: var(--border-color);
+}
+
+/* Styles des composants spécifiques */
+[class^="theme-"] .status-success {
+  color: var(--success-color);
+}
+
+[class^="theme-"] .status-error {
+  color: var(--error-color);
+}
+
+[class^="theme-"] .status-warning {
+  color: var(--warning-color);
+}
+
+[class^="theme-"] .status-info {
+  color: var(--info-color);
+}
+
+/* Animations de transition */
+.theme-transition {
+  transition: background-color 0.3s ease,
+              color 0.3s ease,
+              border-color 0.3s ease;
+}
